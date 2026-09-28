@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday, Coski</title>
+<style>
+:root{--bg:#07050f;--ink:#f6ecff;--soft:#c9b3e8;--glow:#a45cff;--pink:#f7c8ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#07050f}}
+:root[data-theme="dark"]{--bg:#07050f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html{height:100%}
+body{margin:0;min-height:100%;box-sizing:border-box}
+body{background:radial-gradient(ellipse 70% 50% at 85% 0%,#5b2f8a66,transparent 60%),radial-gradient(ellipse 60% 50% at 10% 100%,#2b1b6455,transparent 60%),var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;overflow-x:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:1rem}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+h1{position:relative;margin:0;font-family:Georgia,"Palatino Linotype",serif;font-weight:400;font-size:clamp(1.9rem,7vw,3.4rem);letter-spacing:.02em;text-align:center;color:var(--pink);text-shadow:0 0 24px var(--glow)}
+.hint{position:relative;margin:0;color:var(--soft);font-size:.95rem;text-align:center}
+.stage{position:relative;width:min(88vw,46vh,440px);aspect-ratio:1}
+.ph{position:absolute;inset:0;pointer-events:none}
+.orbit{position:absolute;border-radius:50%;border:1px dashed #b98cff22;animation:spin linear infinite;pointer-events:none}
+.planet{position:absolute;top:0;left:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:0;padding:0;cursor:pointer;background:var(--c);box-shadow:0 0 14px 2px var(--c);transition:transform .2s;pointer-events:auto}
+.planet::after{content:"";position:absolute;inset:-12px;border-radius:50%}
+.planet:hover,.planet:focus-visible{transform:scale(1.5);outline:2px solid var(--pink);outline-offset:3px}
+.tw{animation:tw 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes tw{50%{opacity:.3}}
+.orb{transform-box:view-box;transform-origin:100px 100px;animation:spin var(--d) linear infinite}
+.orb.rev{animation-direction:reverse}
+.cr{transform-box:fill-box;transform-origin:center;animation:spin var(--d) linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bubble{position:absolute;inset:22%;border-radius:50%;border:0;padding:0;cursor:pointer;background:radial-gradient(circle at 35% 30%,#8a5cf0aa,#4b2aa8cc 70%);box-shadow:0 0 0 5px #b06cff88,0 0 50px 12px #9b4dff88,inset 0 0 40px #d9b6ff55;animation:bob 6s ease-in-out infinite;transition:transform .3s}
+.bubble:focus-visible{outline:3px solid var(--pink);outline-offset:6px}
+.bubble.pop{transform:scale(1.14)}
+.bubble svg{width:100%;height:100%;display:block}
+@keyframes bob{50%{translate:0 -6px}}
+.wish{position:relative;min-height:3.2rem;max-width:32ch;margin:0;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:1.2rem;line-height:1.4;color:var(--ink);transition:opacity .35s}
+.wish.out{opacity:0}
+.btn{position:relative;border:1px solid #d9b6ff88;background:#7c3aed55;color:var(--ink);font:inherit;padding:.65rem 1.4rem;border-radius:999px;cursor:pointer;box-shadow:0 0 18px #a45cff66}
+.btn:hover{background:#7c3aed88}
+.btn:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.orbit,.bubble,.tw,.orb,.cr{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="cv" aria-hidden="true"></canvas>
+<h1>Happy Birthday, Coski</h1>
+<p class="hint">Tap the bubble or a planet</p>
+
+<div class="stage" id="stage">
+  <div class="ph" style="transform:rotate(0deg)"><div class="orbit" style="inset:4%;animation-duration:40s"><button class="planet" style="--c:#4aa8ff;width:14px;height:14px;margin:-7px 0 0 -7px" data-w="May this year be full of tiny wonders." aria-label="Blue planet wish"></button></div></div>
+  <div class="ph" style="transform:rotate(90deg)"><div class="orbit" style="inset:4%;animation-duration:40s"><button class="planet" style="--c:#ff9a3c;width:12px;height:12px;margin:-6px 0 0 -6px" data-w="Extra cake, zero Mondays." aria-label="Orange planet wish"></button></div></div>
+  <div class="ph" style="transform:rotate(180deg)"><div class="orbit" style="inset:4%;animation-duration:40s"><button class="planet" style="--c:#c48bff" data-w="Keep drawing worlds only you can see." aria-label="Purple planet wish"></button></div></div>
+  <div class="ph" style="transform:rotate(270deg)"><div class="orbit" style="inset:4%;animation-duration:40s"><button class="planet" style="--c:#e0324f;width:16px;height:16px;margin:-8px 0 0 -8px" data-w="Your friends orbit you for a reason." aria-label="Red planet wish"></button></div></div>
+
+  <button class="bubble" id="bubble" aria-label="Make a birthday wish">
+    <svg viewBox="0 0 200 200" aria-hidden="true">
+      <defs><path id="st" d="M0-6L1.6-1.6 6 0 1.6 1.6 0 6-1.6 1.6-6 0-1.6-1.6z"/></defs>
+      <g fill="#fff">
+        <use href="#st" class="tw" transform="translate(62 44)" fill="#f7c8ff"/>
+        <use href="#st" class="tw" style="animation-delay:-1s" transform="translate(112 34) scale(.7)"/>
+        <use href="#st" class="tw" style="animation-delay:-2s" transform="translate(38 108) scale(.6)"/>
+        <use href="#st" class="tw" style="animation-delay:-.5s" transform="translate(162 132) scale(.8)" fill="#f7c8ff"/>
+        <use href="#st" class="tw" style="animation-delay:-1.5s" transform="translate(76 168) scale(.7)"/>
+        <circle cx="90" cy="60" r="1.2" opacity=".8"/><circle cx="170" cy="92" r="1.3" opacity=".7"/><circle cx="122" cy="170" r="1.2" opacity=".8"/><circle cx="30" cy="70" r="1" opacity=".7"/>
+      </g>
+      <g transform="rotate(36 100 100)"><g class="orb" style="--d:40s"><g class="cr"><ellipse cx="100" cy="32" rx="11" ry="3" fill="none" stroke="#f7c8ff" stroke-width="1.4" transform="rotate(-20 100 32)" opacity=".8"/><circle cx="100" cy="32" r="5.5" fill="#c48bff"/><ellipse cx="100" cy="32" rx="11" ry="3" fill="none" stroke="#f7c8ff" stroke-width="1.4" transform="rotate(-20 100 32)" opacity=".8" stroke-dasharray="9 26" stroke-dashoffset="-8"/></g></g></g>
+      <g transform="rotate(108 100 100)"><g class="orb" style="--d:40s"><circle cx="100" cy="32" r="4.5" fill="#4aa8ff"/></g></g>
+      <g transform="rotate(180 100 100)"><g class="orb" style="--d:40s"><circle cx="100" cy="32" r="3.5" fill="#ff9a3c"/></g></g>
+      <g transform="rotate(252 100 100)"><g class="orb" style="--d:40s"><circle cx="100" cy="32" r="3" fill="#f7c8ff"/></g></g>
+      <g transform="rotate(324 100 100)"><g class="orb" style="--d:40s"><circle cx="100" cy="32" r="2.4" fill="#e0324f"/></g></g>
+      <g transform="rotate(-4 100 100)" fill="none" stroke="#efdcff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M39 82l16 16M55 82l-16 16"/>
+        <rect x="125" y="97" width="36" height="22" rx="11"/><path d="M136 108h14"/>
+        <path d="M63 128c0 8 4 12 9 10c5-5 10-3 13 2c4 5 9 1 12-4c3 5 8 7 13 3"/>
+      </g>
+    </svg>
+  </button>
+</div>
+
+<p class="wish out" id="wish" aria-live="polite"></p>
+<button class="btn" id="btn">Make a wish</button>
+
+<script>
+(function(){
+  var cv=document.getElementById('cv'),cx=cv.getContext('2d'),W,H,stars=[],parts=[];
+  var wishes=["May this year be full of tiny wonders.","Extra cake, zero Mondays.","Keep drawing worlds only you can see.","Your friends orbit you for a reason.","Wishing you a universe of good things.","Another lap around the sun, and it suits you."];
+  function size(){var d=window.devicePixelRatio||1;W=cv.width=innerWidth*d;H=cv.height=innerHeight*d;stars=[];for(var i=0;i<130;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:(Math.random()*1.3+.3)*d,p:Math.random()*6.28,s:Math.random()*.02+.005});}
+  size();addEventListener('resize',size);
+  function burst(x,y){var d=window.devicePixelRatio||1,cols=['#f7c8ff','#a45cff','#4aa8ff','#ff9a3c','#ffffff'];for(var i=0;i<46;i++){var a=Math.random()*6.28,v=(Math.random()*3+1)*d;parts.push({x:x*d,y:y*d,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,r:(Math.random()*2.5+1)*d,c:cols[i%5]});}}
+  function draw(){cx.clearRect(0,0,W,H);
+    stars.forEach(function(s){s.p+=s.s;cx.globalAlpha=.35+.35*Math.sin(s.p);cx.fillStyle='#fff';cx.beginPath();cx.arc(s.x,s.y,s.r,0,6.28);cx.fill();});
+    parts=parts.filter(function(p){return p.l>0});
+    parts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vx*=.985;p.vy=p.vy*.985+.02;p.l-=.011;cx.globalAlpha=Math.max(p.l,0);cx.shadowBlur=10;cx.shadowColor=p.c;cx.fillStyle=p.c;cx.beginPath();cx.arc(p.x,p.y,p.r,0,6.28);cx.fill();});
+    cx.shadowBlur=0;cx.globalAlpha=1;requestAnimationFrame(draw);}
+  draw();
+  var wEl=document.getElementById('wish'),bub=document.getElementById('bubble'),last=-1;
+  function show(t){wEl.classList.add('out');setTimeout(function(){wEl.textContent=t;wEl.classList.remove('out');},250);}
+  function rnd(){var i;do{i=Math.floor(Math.random()*wishes.length)}while(i===last);last=i;return wishes[i];}
+  function centerBurst(){var r=bub.getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2);bub.classList.add('pop');setTimeout(function(){bub.classList.remove('pop')},300);}
+  function wish(){centerBurst();show(rnd());}
+  bub.addEventListener('click',wish);
+  document.getElementById('btn').addEventListener('click',wish);
+  document.querySelectorAll('.planet').forEach(function(p){p.addEventListener('click',function(){var r=p.getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2);show(p.dataset.w);});});
+})();
+</script>
+</body>
+</html>
